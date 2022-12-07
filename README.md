@@ -22,3 +22,9 @@ You will need to open a terminal move into the `src/frontend` directory and run 
 npm install
 npm run dev
 ```
+
+Once the frontend application is running you can run the Spring Boot application with the following command: 
+
+```bash
+./mvnw spring-boot:run
+```
