@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import {reactive, ref} from 'vue';
 import { useReCaptcha } from 'vue-recaptcha-v3'
 
-const user = ref({ username: '', password: '' });
+const user = reactive({ username: '', password: '' });
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha()
 
 const onSubmit = async () => {
@@ -11,9 +11,22 @@ const onSubmit = async () => {
 
   // Execute reCAPTCHA with action "login".
   const token = await executeRecaptcha('login')
-  console.log(token);
+  console.log("token:",token);
+  console.log("user:",user);
 
-  // Do stuff with the received token.
+  // Send the token as a header to the login endpoint
+  fetch('http://localhost:8080/api/auth/token', {
+    method: 'POST',
+    headers: {
+      'recaptcha': token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+  .then(r => r.text())
+  .then(data => {
+    console.log("jwt:",data)
+  });
 
 }
 </script>
