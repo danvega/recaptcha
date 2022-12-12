@@ -28,3 +28,7 @@ Once the frontend application is running you can run the Spring Boot application
 ```bash
 ./mvnw spring-boot:run
 ```
+
+## Tutorial
+
+If you want to follow along with the tutorial you can checkout the `start-here` branch and watch the video below: 

@@ -5,7 +5,6 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import dev.danvega.authdemo.service.RecaptchaService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +34,6 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,12 +42,7 @@ import java.util.UUID;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final RecaptchaService recaptchaService;
     private RSAKey rsaKey;
-
-    public SecurityConfig(RecaptchaService recaptchaService) {
-        this.recaptchaService = recaptchaService;
-    }
 
     @Bean
     public AuthenticationManager authManager(UserDetailsService userDetailsService) {
@@ -79,7 +72,6 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .addFilterBefore(new RecaptchaFilter(recaptchaService), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
