@@ -26,12 +26,10 @@ public class RecaptchaFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if(request.getMethod().equals("POST") ) {
             String recaptcha = request.getHeader("recaptcha");
-            if(!recaptcha.isBlank()) {
-                RecaptchaResponse recaptchaResponse = recaptchaService.validateToken(recaptcha);
-                if(!recaptchaResponse.success()) {
-                    LOG.info("Invalid reCAPTCHA token");
-                    throw new BadCredentialsException("Invalid reCaptcha token");
-                }
+            RecaptchaResponse recaptchaResponse = recaptchaService.validateToken(recaptcha);
+            if(!recaptchaResponse.success()) {
+                LOG.info("Invalid reCAPTCHA token");
+                throw new BadCredentialsException("Invalid reCaptcha token");
             }
         }
         filterChain.doFilter(request,response);
