@@ -4,6 +4,7 @@ import dev.danvega.authdemo.security.RecaptchaProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +18,6 @@ public class Application {
 
     @Bean
     RestTemplate restTemplate() {
-        return new RestTemplate();
+        return new RestTemplateBuilder().build();
     }
 }
